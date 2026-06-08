@@ -1,0 +1,149 @@
+/* ========================================================
+   FILE: assets/css/style-beranda.css
+   TEMA: Glassmorphism, Clean, Digital Aesthetic
+   ======================================================== */
+
+body {
+    background-color: #f8fafc; /* Tetap bersih dan terang */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    position: relative;
+    overflow-x: hidden; 
+}
+
+/* Tekstur Grid Digital - Diubah ke ungu transparan */
+.digital-grid {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2;
+    background-image: 
+        linear-gradient(rgba(111, 66, 193, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(111, 66, 193, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px; 
+    pointer-events: none;
+}
+
+/* Cahaya Aurora Latar Belakang (Gradient Blob) */
+.aurora-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+    overflow: hidden; pointer-events: none;
+}
+.aurora-blob {
+    position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.28;
+    animation: floatGlow 15s infinite alternate ease-in-out;
+}
+/* Blob Utama - Diubah dari biru ke ungu */
+.blob-blue {
+    top: -10%; left: 10%; width: 45vw; height: 45vw; min-width: 300px; min-height: 300px;
+    background: #6f42c1;
+}
+/* Blob Pendukung - Diubah dari biru muda ke ungu muda */
+.blob-soft {
+    bottom: -10%; right: -5%; width: 55vw; height: 55vw; min-width: 350px; min-height: 350px;
+    background: #f3effb; 
+    animation-delay: -5s;
+}
+
+@keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(3vw, 5vh) scale(1.1); }
+}
+
+/* Tipografi Hero */
+/* Tipografi Hero - Menghapus bayangan biru jika ada */
+.hero-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    text-shadow: none !important;
+    color: #0f172a; 
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem) !important;
+}
+
+/* Mengubah gradasi nama gereja dari biru ke ungu */
+.church-name-aesthetic {
+    font-family: 'Playfair Display', serif; 
+    font-weight: 700;
+    /* Gradasi Ungu: Dari Ungu terang ke Ungu lebih tua */
+    background: linear-gradient(135deg, #6f42c1 0%, #4a2c85 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    padding-right: 15px; 
+    padding-left: 5px; 
+}
+
+/* Kartu Glassmorphism - Memperbaiki hover shadow agar sesuai tema ungu */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+.glass-card:hover {
+    transform: translateY(-5px);
+    /* Shadow ungu tipis saat hover */
+    box-shadow: 0 20px 40px rgba(111, 66, 193, 0.15);
+}
+
+/* Animasi Ikon Kamera - Mengganti semua efek pulsa biru ke ungu */
+.icon-pulse {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    /* Latar belakang ungu transparan */
+    background-color: rgba(111, 66, 193, 0.1);
+    color: #6f42c1;
+    box-shadow: 0 0 0 0 rgba(111, 66, 193, 0.4);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(111, 66, 193, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(111, 66, 193, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(111, 66, 193, 0); }
+}
+
+/* Verse Text - Tetap elegan, namun bisa diberikan sedikit sentuhan ungu */
+.verse-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    line-height: 1.6;
+    color: #4a2c85; /* Sedikit lebih gelap dari ungu utama agar kontras namun senada */
+    font-style: italic;
+}
+
+.hero-section { min-height: 80vh; display: flex; align-items: center; position: relative; }
+
+/* Style Mini Kalender Event - Ganti semua aksen biru ke ungu */
+.event-calendar-badge {
+    min-width: 65px;
+    text-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+    /* Shadow ungu tipis */
+    box-shadow: 0 4px 10px rgba(111, 66, 193, 0.15);
+}
+.event-calendar-month {
+    background: #6f42c1; /* Ungu utama */
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 0;
+    letter-spacing: 1px;
+}
+.event-calendar-date {
+    background: white;
+    color: #6f42c1; /* Ungu utama */
+    font-size: 1.5rem;
+    font-weight: 800;
+    padding: 6px 0;
+    line-height: 1;
+}

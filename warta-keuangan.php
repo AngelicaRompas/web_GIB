@@ -1,0 +1,284 @@
+<?php 
+include 'koneksi.php'; 
+
+// 1. Logika Header: Total Keseluruhan (untuk 3 kolom di atas)
+$queryTotal = mysqli_query($koneksi, "SELECT SUM(total_pemasukan) as total_masuk, SUM(total_pengeluaran) as total_keluar FROM warta_keuangan");
+$totalData = mysqli_fetch_assoc($queryTotal);
+
+// 2. Logika Filter Bulan Berjalan
+$bulan_ini = date('m');
+$tahun_ini = date('Y');
+$query = mysqli_query($koneksi, "SELECT * FROM warta_keuangan WHERE MONTH(tanggal) = '$bulan_ini' AND YEAR(tanggal) = '$tahun_ini' ORDER BY tanggal ASC");
+
+// 3. Ambil Saldo Kas Abadi Terbaru
+$querySaldo = mysqli_query($koneksi, "SELECT saldo_akhir FROM warta_keuangan ORDER BY id DESC LIMIT 1");
+$dataSaldo = mysqli_fetch_assoc($querySaldo);
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Keuangan Jemaat - GMIM Imanuel Bahu</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style-beranda.css?v=<?php echo time(); ?>">
+    
+    <style>
+    .page-header-premium {
+        padding-top: 6rem;
+        padding-bottom: 3rem;
+        position: relative;
+    }
+    .main-title-aesthetic {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(3rem, 5vw, 4rem);
+        font-weight: 900;
+        color: #0f172a;
+        letter-spacing: -1px;
+    }
+    
+    /* Modifikasi Card Saldo dengan Glassmorphism */
+    .saldo-card-glass {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 1);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        transition: transform 0.3s ease;
+    }
+    .saldo-card-glass:hover {
+        transform: translateY(-5px);
+    }
+    
+    .saldo-primary-glass {
+        background: rgba(111, 66, 193, 0.9); /* Ungu */
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+    
+    /* Modifikasi Tabel Glassmorphism */
+    .table-glass-container {
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 1);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+    
+    .table-custom {
+        margin-bottom: 0;
+    }
+    .table-custom thead th {
+        background-color: rgba(111, 66, 193, 0.08); /* Ungu muda */
+        color: #0f172a;
+        font-weight: 700;
+        border-bottom: 2px solid rgba(111, 66, 193, 0.2);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+    .table-custom tbody td {
+        background-color: transparent !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        vertical-align: middle;
+    }
+    .table-custom tbody tr:hover td {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    /* Styling Kartu Bulan */
+    .month-card {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 12px;
+        padding: 10px;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    .month-card:hover {
+        background: rgba(111, 66, 193, 0.1);
+        transform: translateY(-3px);
+    }
+    .month-card.active {
+        background: linear-gradient(135deg, #6f42c1, #4a2c85);
+        color: white;
+    }
+    .month-card i { font-size: 1.1rem; }
+
+    .month-card a {
+        transition: transform 0.2s ease;
+    }
+    .month-card a:hover {
+        transform: scale(1.2);
+    }
+</style>
+</head>
+<body>
+
+<div class="digital-grid"></div>
+<div class="aurora-container">
+    <div class="aurora-blob blob-blue"></div>
+    <div class="aurora-blob blob-soft"></div>
+</div>
+
+<?php include 'navbar.php'; ?>
+
+<section class="page-header-premium text-center z-2">
+    <div class="container">
+        <div data-aos="fade-down" data-aos-duration="800">
+            <span class="badge rounded-pill px-3 py-2 small mb-3 fw-bold tracking-widest" 
+            style="letter-spacing: 2px; background-color: rgba(111, 66, 193, 0.1); color: #6f42c1;">
+            <i class="bi bi-wallet2 me-2"></i>AKUNTABILITAS
+            </span>      
+        </div>
+        <h1 class="main-title-aesthetic mb-3" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="100">
+            Transparansi Keuangan
+        </h1>
+        <p class="text-muted fw-medium mb-0" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            Laporan Kas Masuk, Keluar, dan Saldo Kumulatif Jemaat GMIM Imanuel Bahu
+        </p>
+    </div>
+</section>
+
+<div class="container pb-5 mb-5 position-relative z-2">
+    
+    <?php
+    $queryTop = mysqli_query($koneksi, "SELECT * FROM warta_keuangan ORDER BY id DESC LIMIT 1");
+    $dataTop = mysqli_fetch_assoc($queryTop);
+    ?>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="saldo-card-glass p-4 border-start border-success border-4 h-100">
+                <small class="text-muted fw-bold text-uppercase tracking-wider">Total Pemasukan Terakhir</small>
+                <h3 class="fw-bolder text-success mt-2 mb-3">Rp <?php echo number_format($totalData['total_masuk'] ?? 0, 0, ',', '.'); ?></h3>
+                <small class="text-muted small fw-medium"><i class="bi bi-calendar-check me-1"></i> Per tanggal <?php echo isset($dataTop['tanggal']) ? date('d/m/Y', strtotime($dataTop['tanggal'])) : '-'; ?></small>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="saldo-card-glass p-4 border-start border-danger border-4 h-100">
+                <small class="text-muted fw-bold text-uppercase tracking-wider">Total Pengeluaran Terakhir</small>
+                <h3 class="fw-bolder text-danger mt-2 mb-3">Rp <?php echo number_format($totalData['total_keluar'] ?? 0, 0, ',', '.'); ?></h3>
+                <small class="text-muted small fw-medium"><i class="bi bi-cart-dash me-1"></i> Alokasi operasional & pelayanan</small>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+            <div class="saldo-card-glass saldo-primary-glass p-4 h-100">
+                <small class="text-white-50 fw-bold text-uppercase tracking-wider">Saldo Kas Abadi Saat Ini</small>
+                <h3 class="fw-bolder text-white mt-2 mb-3">Rp <?php echo number_format($dataSaldo['saldo_akhir'] ?? 0, 0, ',', '.'); ?></h3>
+                <small class="text-white-50 small fw-medium"><i class="bi bi-shield-check me-1"></i> Kas Terkonsolidasi (Otomatis)</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-glass-container mb-5" data-aos="zoom-in" data-aos-delay="600">
+        <h5 class="fw-bold text-dark mb-4"><i class="bi bi-journal-album text-primary me-2"></i>Buku Besar Arsip Anggaran</h5>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered align-middle">
+                <thead>
+                    <tr class="text-center">
+                        <th>No</th><th>Tanggal Ibadah</th><th>Pemasukan</th><th>Pengeluaran</th><th>Saldo</th><th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if(mysqli_num_rows($query) > 0): $no=1; while($data = mysqli_fetch_assoc($query)): ?>
+                    <tr>
+                        <td class="text-center"><?php echo $no++; ?></td>
+                        <td class="text-center"><?php echo date('d/m/Y', strtotime($data['tanggal'])); ?></td>
+                        <td class="text-end text-success fw-bold">Rp <?php echo number_format($data['total_pemasukan'], 0, ',', '.'); ?></td>
+                        <td class="text-end text-danger fw-bold">Rp <?php echo number_format($data['total_pengeluaran'], 0, ',', '.'); ?></td>
+                        <td class="text-end fw-bold">Rp <?php echo number_format($data['saldo_akhir'], 0, ',', '.'); ?></td>
+                        <td><?php echo nl2br(htmlspecialchars($data['keterangan'])); ?></td>
+                    </tr>
+                    <?php endwhile; else: ?>
+                    <tr><td colspan="6" class="text-center py-4">Belum ada data bulan ini.</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="table-glass-container" data-aos="zoom-in" data-aos-delay="200">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="fw-bold text-dark m-0"><i class="bi bi-calendar-event text-primary me-2"></i>Riwayat Laporan Tahunan</h5>
+            <form method="GET" class="w-25">
+                <select name="tahun" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <?php 
+                    $tahun_skrg = date('Y');
+                    for($y=$tahun_skrg; $y>=2020; $y--) {
+                        $selected = (isset($_GET['tahun']) && $_GET['tahun'] == $y) ? 'selected' : '';
+                        echo "<option value='$y' $selected>$y</option>";
+                    }
+                    ?>
+                </select>
+            </form>
+        </div>
+        <div class="row g-2">
+            <?php 
+            $tahun_pilih = $_GET['tahun'] ?? $tahun_skrg;
+            for($m=1; $m<=12; $m++): 
+                $bln_nama = date('M', mktime(0,0,0,$m,1));
+                $qCek = mysqli_query($koneksi, "SELECT COUNT(*) as jml FROM warta_keuangan WHERE MONTH(tanggal) = '$m' AND YEAR(tanggal) = '$tahun_pilih'");
+                $cek = mysqli_fetch_assoc($qCek);
+                $hasData = ($cek['jml'] > 0);
+            ?>
+            <div class="col-6 col-md-3 col-lg-2">
+                <div class="month-card <?php echo $hasData ? 'active' : ''; ?>">
+                    <span><?php echo $bln_nama; ?></span>
+                    <?php if($hasData): ?>
+                        <a href="javascript:void(0)" class="text-white" onclick="loadArsip(<?php echo $m; ?>, <?php echo $tahun_pilih; ?>)">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                    <?php else: ?>
+                        <i class="bi bi-dash text-muted"></i>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endfor; ?>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="arsipModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detail Arsip Keuangan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+<?php include 'footer.php'; ?>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true, offset: 80 });
+    function loadArsip(bulan, tahun) {
+        fetch('arsip_keuangan.php?is_modal=1&bulan=' + bulan + '&tahun=' + tahun)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('modalContent').innerHTML = data;
+            new bootstrap.Modal(document.getElementById('arsipModal')).show();
+        });
+    }
+</script>
+</body>
+</html>

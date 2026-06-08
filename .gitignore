@@ -1,0 +1,6 @@
+mpdf-8.1.0/
+composer.phar
+*.zip
+*.rar
+*.sql
+.env

@@ -1,0 +1,136 @@
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
+            --church-blue: #0056b3;
+            --slate-dark: #1e293b;
+            --soft-slate: #64748b;
+            --bg-canvas: #f8fafc;
+        }
+
+        body { 
+            background-color: var(--bg-canvas); 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--slate-dark);
+        }
+
+        .navbar {
+            z-index: 10000 !important;
+            background-color: var(--church-blue) !important;
+            position: relative;
+        }
+
+        .hero-stat {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 70px 0 130px 0;
+            border-radius: 0 0 35px 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container-stats {
+            margin-top: -80px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .stat-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+}
+
+/* Tambahkan ini agar background aurora muncul di file ini */
+.digital-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.aurora-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+
+        .stat-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08); 
+        }
+
+        .icon-box {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .bg-blue-light { background: #eff6ff; color: #2563eb; }
+        .bg-green-light { background: #f0fdf4; color: #16a34a; }
+        .bg-orange-light { background: #fff7ed; color: #ea580c; }
+        
+        /* Tinggi kontainer grafik disesuaikan agar proporsional saat berjajar 4 kolom */
+        .chart-container { 
+            position: relative; 
+            height: 200px; 
+            width: 100%; 
+            padding: 5px; 
+        }
+        
+        .card-header-digital {
+            background: transparent;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 14px 18px;
+            font-weight: 700;
+            color: var(--slate-dark);
+            font-size: 0.92rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-pills-custom {
+            background: #ffffff;
+            padding: 6px;
+            border-radius: 50px;
+            display: inline-flex;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .nav-pills-custom .nav-link {
+            color: var(--soft-slate);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            padding: 10px 24px;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-pills-custom .nav-link.active {
+            background-color: var(--church-blue);
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+        }
+
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            background: #ffffff;
+            padding: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .pendeta-pelayan-card img {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .pendeta-pelayan-card:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 1199.98px) {
+            .card-header-digital { font-size: 0.85rem; padding: 12px; }
+            .chart-container { height: 180px; }
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-stat { padding: 50px 0 100px 0; }
+            .container-stats { margin-top: -60px; }
+            .chart-container { height: 200px; }
+            .table-responsive { border-radius: 12px; }
+        }

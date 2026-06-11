@@ -21,91 +21,110 @@ if (session_status() === PHP_SESSION_NONE) {
 
 /* =========================================================
    PENTING: Khusus untuk Tampilan Mobile (Max 991px)
-   Ini membuat menu muncul sebagai POP-UP MELAYANG
    ========================================================= */
 @media (max-width: 991px) {
-    /* Logo: Sesuaikan ukuran teks */
-    .navbar-brand { font-size: 1.1rem; }
-    
-    /* Tombol 3 Garis (Hamburger): Pastikan di kanan */
-    .navbar-toggler {
-        order: 2;
-        margin-right: -10px; /* Sedikit mepet kanan */
+    /* 1. Pengaturan Container agar item tetap sejajar 1 baris */
+    .navbar .container {
+        display: flex;
+        flex-wrap: nowrap !important;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
-    /* KONTEN MENU POP-UP: Tampilan utama Pop-up */
+    /* 2. Logo dan Brand */
+    .navbar-brand { 
+        display: flex; 
+        align-items: center; 
+        flex-grow: 1; 
+        min-width: 0; 
+        margin-right: 10px !important;
+    }
+    
+    .navbar-brand img { 
+        width: 40px !important; 
+        height: 40px !important; 
+        margin-right: 8px !important; 
+        flex-shrink: 0;
+    }
+
+    .brand-text { 
+        font-size: 0.85rem !important; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }
+
+    /* 3. Tombol Toggle (Hamburger) */
+    .navbar-toggler {
+        flex-shrink: 0;
+        margin-left: auto;
+        order: 2;
+        padding: 5px 10px;
+        border: none;
+    }
+
+    /* 4. KONTEN MENU POP-UP */
     .navbar-collapse {
         position: absolute;
-        top: 100%; /* Pas di bawah navbar */
-        right: 15px; /* Sedikit geser dari tepi */
-        background: rgba(255, 255, 255, 0.98); /* Putih bersih transparan */
-        width: 250px; /* Lebar Pop-up */
-        border-radius: 15px; /* Sudut membulat aesthetic */
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Bayangan Pop-up */
+        top: 100%;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.98);
+        width: 250px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         padding: 20px;
-        z-index: 1050; /* Pastikan di atas konten lain */
+        z-index: 1050;
         border: 1px solid rgba(0, 0, 0, 0.05);
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease-in-out;
+        margin-top: 10px;
     }
 
-    /* Saat Menu Aktif (Buka): Efek transisi */
     .navbar-collapse.show {
         opacity: 1;
         visibility: visible;
-        transform: translateY(10px); /* Efek sedikit melayang */
+        transform: translateY(5px);
     }
 
-    /* List Menu Mobile */
+    /* 5. List Menu Mobile */
     .navbar-nav {
         display: flex;
         flex-direction: column;
-        align-items: flex-start !important; /* Menu rata kiri di dalam pop-up */
+        align-items: flex-start !important;
         width: 100%;
         margin: 0 !important;
     }
 
-    /* Menu Utama Mobile */
-    .navbar-nav .nav-item {
-        width: 100%;
-        margin-bottom: 5px;
-    }
+    .navbar-nav .nav-item { width: 100%; margin-bottom: 5px; }
 
     .navbar-nav .nav-link {
-        color: #6f42c1 !important; /* Warna ungu teks */
+        color: #6f42c1 !important;
         font-weight: 600 !important;
         padding: 10px 15px !important;
         border-radius: 8px;
-        transition: background 0.2s;
         text-align: left;
+        transition: background 0.2s;
     }
 
-    /* Efek hover menu mobile */
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link:focus {
-        background-color: rgba(111, 66, 193, 0.1);
-    }
+    .navbar-nav .nav-link:hover { background-color: rgba(111, 66, 193, 0.1); }
 
-    /* Dropdown Inner Mobile (Sub-menu) */
+    /* 6. Dropdown Mobile */
     .dropdown-menu {
-        position: static !important; /* Di mobile, dropdown ikut list */
+        position: static !important;
         float: none;
         width: 100%;
         margin-top: 5px;
         border: none !important;
-        box-shadow: none !important;
-        background: rgba(111, 66, 193, 0.05) !important; /* Latar sub-menu */
-        border-radius: 8px;
+        background: rgba(111, 66, 193, 0.05) !important;
         padding-left: 15px !important;
     }
 
-    .dropdown-item {
-        color: #555 !important;
-        padding: 8px 15px !important;
-    }
+    .dropdown-item { color: #555 !important; padding: 8px 15px !important; }
 
-    /* Merapikan Tombol Admin/Login di Mobile */
+    /* 7. Tombol Admin/Login */
     .navbar-nav .nav-item.ms-lg-3 {
         width: 100%;
         margin-top: 15px !important;
@@ -114,23 +133,9 @@ if (session_status() === PHP_SESSION_NONE) {
         padding-top: 15px;
     }
 
-    /* Tombol Admin/Login Mobile */
-    .navbar-nav .btn {
-        width: 100% !important;
-        justify-content: center !important;
-        display: flex !important;
-        align-items: center;
-        padding: 12px !important;
-    }
-
-    /* Menu Dropdown Admin Mobile */
-    .dropdown-menu-end {
-        right: 0;
-        left: auto;
-        transform: none !important;
-        margin-top: 5px !important;
-        width: 100% !important;
-        position: relative !important;
+    .navbar-nav .btn { 
+        width: 100% !important; 
+        justify-content: center !important; 
     }
 }
 </style>
@@ -173,6 +178,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
 
                 <li class="nav-item"><a class="nav-link px-3 fw-bold text-white" href="renungan.php">Renungan</a></li>
+
+                <li class="nav-item"><a class="nav-link px-3 fw-bold text-white" href="kontak.php">Kontak</a></li>
                 
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                     <?php if (isset($_SESSION['admin_imanuel'])): ?>
@@ -190,7 +197,10 @@ if (session_status() === PHP_SESSION_NONE) {
                         <a class="btn btn-outline-light rounded-pill px-4 fw-bold shadow-sm" href="login.php">Login Admin</a>
                     <?php endif; ?>
                 </li>
+
+                
             </ul>
         </div>
     </div>
 </nav>
+

@@ -32,11 +32,11 @@ if (isset($_POST['upload_warta'])) {
                 
                 // PERBAIKAN: Gunakan ../../ untuk menunjuk folder assets di root website
                 // Ubah path ini sesuai struktur folder riil jika assets ada di root
-                $folder_tujuan  = "../../assets/document_warta/" . $nama_file_baru; 
+                $folder_tujuan = $_SERVER['DOCUMENT_ROOT'] . "/gereja_imanuel/assets/document_warta/" . $nama_file_baru;
 
                 // Periksa apakah folder benar-benar ada, jika belum otomatis dibuat
-                if(!is_dir("../../assets/document_warta/")) {
-                    mkdir("../../assets/document_warta/", 0777, true);
+                if(!is_dir($_SERVER['DOCUMENT_ROOT'] . "/gereja_imanuel/assets/document_warta/")) {
+                    mkdir($_SERVER['DOCUMENT_ROOT'] . "/gereja_imanuel/assets/document_warta/", 0777, true);
                 }
 
                 if (move_uploaded_file($file_tmp, $folder_tujuan)) {

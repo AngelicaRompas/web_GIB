@@ -116,9 +116,10 @@ $query = mysqli_query($koneksi, "SELECT * FROM warta_jemaat ORDER BY tanggal DES
                         </div>
                         
                         <div class="mt-4 pt-3 border-top text-end">
-                            <a href="admin/assets/document_warta/<?php echo htmlspecialchars($data['file_pdf']); ?>" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-4 fw-bold">
-                                <i class="bi bi-cloud-arrow-down-fill me-1"></i> Unduh / Baca PDF
-                            </a>
+                            <a href="assets/document_warta/<?php echo htmlspecialchars($data['file_pdf']); ?>" 
+                            target="_blank" 
+                            class="btn btn-outline-primary btn-sm rounded-pill px-4 fw-bold">
+                            <i class="bi bi-cloud-arrow-down-fill me-1"></i> Unduh / Baca PDF </a>
                         </div>
                     </div>
                 </div>

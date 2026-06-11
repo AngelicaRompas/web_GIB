@@ -62,9 +62,11 @@ $nama_bulan = date('F', mktime(0, 0, 0, $bulan, 1));
             <h3 class="fw-bold"><i class="bi bi-archive me-2"></i>Arsip: <?php echo $nama_bulan . ' ' . $tahun; ?></h3>
             
             <div>
-                <a href="cetak_pdf.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>" class="btn btn-danger" target="_blank">
-                    <i class="bi bi-file-pdf"></i> Download PDF
-                </a>
+            <a href="print_keuangan.php?bulan=<?php echo $bulan; ?>&tahun=<?php echo $tahun; ?>"
+            class="btn btn-dark rounded-pill px-4 py-2 fw-semibold shadow-sm"
+            target="_blank">
+            <i class="bi bi-file-earmark-pdf-fill me-2"></i>Download PDF</a>
+
                 <?php if(!$is_modal): ?>
                     <a href="warta-keuangan.php" class="btn btn-outline-primary ms-2"><i class="bi bi-arrow-left"></i> Kembali</a>
                 <?php endif; ?>

@@ -56,7 +56,30 @@
             padding-top: 2rem !important;
             padding-bottom: 2rem !important;
         }
+
+        .row.g-4 > [class*='col-'] {
+            margin-bottom: 1.5rem;
         }
+        
+        /* Mengatur ulang tinggi kartu agar tidak terlalu panjang di mobile */
+        .glass-card {
+            padding: 1.5rem !important;
+        }
+        
+        /* Memastikan gambar tetap proporsional */
+        .glass-card [style*="height: 320px"] {
+            height: 250px !important;
+        }
+
+        /* Mengurangi ukuran font judul agar tidak patah baris */
+        h2 { font-size: 1.5rem !important; }
+        
+        /* Mengatur padding container agar tidak terlalu mepet ke layar */
+        .container-fluid {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+    }
     </style>
 </head>
 <body>
@@ -248,12 +271,23 @@ include 'navbar.php';
 <section class="reflection-section py-5 mb-5">
     <div class="container text-center">
         <div class="glass-card p-5 mx-auto" style="max-width: 800px;" data-aos="fade-up" data-aos-duration="1000">
-            <div class="text-primary mb-3 opacity-50"><i class="bi bi-quote" style="font-size: 2.5rem;"></i></div>
             <?php 
-            $ayat_hari_ini = ["teks" => "Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku.", "kitab" => "Filipi 4:13"];
+            // Hubungkan dengan file bank ayat
+            include 'data_ayat.php'; 
+            
+            // Menggunakan array_rand agar ayat berganti setiap kali halaman di-refresh
+            $index_terpilih = array_rand($bank_ayat);
+            $ayat_hari_ini = $bank_ayat[$index_terpilih];
             ?>
-            <p class="verse-text px-md-4 mb-4">"<?php echo $ayat_hari_ini['teks']; ?>"</p>
-            <span class="text-primary fw-bold small text-uppercase tracking-wider">— <?php echo $ayat_hari_ini['kitab']; ?></span>
+            <div class="text-primary mb-3 opacity-50">
+                <i class="bi bi-quote" style="font-size: 2.5rem;"></i>
+            </div>
+            <p class="verse-text px-md-4 mb-4" style="font-size: 1.2rem; line-height: 1.6;">
+                "<?php echo htmlspecialchars($ayat_hari_ini['teks']); ?>"
+            </p>
+            <span class="text-primary fw-bold small text-uppercase tracking-wider" style="letter-spacing: 1.5px;">
+                — <?php echo htmlspecialchars($ayat_hari_ini['kitab']); ?>
+            </span>
         </div>
     </div>
 </section>

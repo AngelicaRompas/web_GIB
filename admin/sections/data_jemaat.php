@@ -92,9 +92,12 @@
             </div>
             <div class="col-md-3">
                 <select name="kategori" class="form-select">
-                    <option value="bipra">Komisi BIPRA</option>
-                    <option value="komisi_kerja">Komisi Kerja</option>
-                    <option value="lansia">Lansia</option>
+                    <option value="bipra">Komisi Pria Kaum Bapa</option>
+                    <option value="komisi_kerja">Komisi Wanita Kaum Ibu</option>
+                    <option value="lansia">Komisi Pemuda</option>
+                    <option value="bipra">Komisi Remaja</option>
+                    <option value="komisi_kerja">Komisi Anak Sekolah Minggu</option>
+                    <option value="lansia">Komisi Kerja</option>
                 </select>
             </div>
             <div class="col-md-3">

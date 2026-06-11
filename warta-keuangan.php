@@ -185,9 +185,23 @@ $dataSaldo = mysqli_fetch_assoc($querySaldo);
         </div>
     </div>
 
-    <div class="table-glass-container mb-5" data-aos="zoom-in" data-aos-delay="600">
-        <h5 class="fw-bold text-dark mb-4"><i class="bi bi-journal-album text-primary me-2"></i>Buku Besar Arsip Anggaran</h5>
-        <div class="table-responsive">
+<div class="table-glass-container mb-5" data-aos="zoom-in" data-aos-delay="600">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+
+        <h5 class="fw-bold text-dark m-0">
+            <i class="bi bi-journal-album text-primary me-2"></i>
+            Buku Besar Arsip Anggaran
+        </h5>
+
+    <a href="print_keuangan.php?bulan=<?php echo $bulan_ini; ?>&tahun=<?php echo $tahun_ini; ?>"
+        target="_blank"
+        class="btn btn-dark rounded-pill px-4 py-2 fw-semibold shadow-sm">
+        <i class="bi bi-file-earmark-pdf-fill me-2"></i>Download PDF</a>
+    </div>
+
+
+    <div class="table-responsive rounded-4 overflow-hidden">
             <table class="table table-hover table-striped table-bordered align-middle">
                 <thead>
                     <tr class="text-center">

@@ -45,7 +45,7 @@
 <?php 
 include 'navbar.php'; 
 include 'koneksi.php'; 
-$queryKetua = mysqli_query($koneksi, "SELECT * FROM ketua_jemaat ORDER BY tahun_mulai ASC");
+$queryKetua = mysqli_query($koneksi, "SELECT * FROM ketua_jemaat ORDER BY tahun_mulai DESC");
 ?>
 
 <section class="page-header-premium text-center z-2">
@@ -81,7 +81,7 @@ $queryKetua = mysqli_query($koneksi, "SELECT * FROM ketua_jemaat ORDER BY tahun_
         <div class="header-box mb-5">DAFTAR KETUA JEMAAT</div>
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             <?php 
-            $queryGrid = mysqli_query($koneksi, "SELECT * FROM ketua_jemaat ORDER BY tahun_mulai ASC");
+            $queryGrid = mysqli_query($koneksi, "SELECT * FROM ketua_jemaat ORDER BY tahun_mulai DESC");
             while($k = mysqli_fetch_assoc($queryGrid)): 
                 $foto = (!empty($k['foto']) && file_exists("assets/images/" . $k['foto'])) ? "assets/images/" . $k['foto'] : "assets/images/default.jpg";
             ?>

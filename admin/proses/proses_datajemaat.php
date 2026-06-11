@@ -52,11 +52,12 @@ if (isset($_POST['update_data_jemaat'])) {
 }
 
 // B. Logika Komisi (TAMBAHAN)
+// B. Manajemen Komisi
 elseif (isset($_POST['tambah_anggota_komisi'])) {
     $stmt = $koneksi->prepare("INSERT INTO struktur_organisasi (nama, jabatan, kategori) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $_POST['nama'], $_POST['jabatan'], $_POST['kategori']);
     $stmt->execute();
-    header("Location: ../data_jemaat.php?pesan=sukses_tambah");
+    header("Location: ../admin_dashboard.php?tab=data-jemaat&pesan=sukses_tambah");
     exit;
 }
 
@@ -76,10 +77,25 @@ elseif (isset($_GET['hapus_komisi'])) {
     exit;
 }
 
-else {
-    // Jika file ini diakses langsung tanpa aksi apapun
-    header("Location: ../admin_dashboard.php?tab=data-jemaat");
+// C. Manajemen Kategori
+elseif (isset($_POST['tambah_kategori'])) {
+    $stmt = $koneksi->prepare("INSERT INTO kategori_komisi (nama_kategori) VALUES (?)");
+    $stmt->bind_param("s", $_POST['nama_kategori']);
+    $stmt->execute();
+    header("Location: ../admin_dashboard.php?tab=data-jemaat&pesan=sukses_kategori");
     exit;
 }
 
+elseif (isset($_GET['hapus_kategori'])) {
+    $stmt = $koneksi->prepare("DELETE FROM kategori_komisi WHERE id = ?");
+    $stmt->bind_param("i", $_GET['id']);
+    $stmt->execute();
+    header("Location: ../admin_dashboard.php?tab=data-jemaat&pesan=sukses_hapus_kategori");
+    exit;
+}
+
+else {
+    header("Location: ../admin_dashboard.php?tab=data-jemaat");
+    exit;
+}
 ?>

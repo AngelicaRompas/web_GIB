@@ -16,6 +16,8 @@ $alerts = [
     'sukses_tambah'          => ['success', 'Data anggota komisi berhasil ditambahkan!'],
     'sukses_edit'            => ['success', 'Data anggota komisi berhasil diperbarui!'],
     'sukses_hapus'           => ['info', 'Data anggota komisi berhasil dihapus.'],
+    'sukses_kategori'      => ['success', 'Kategori komisi baru berhasil ditambahkan!'],
+    'sukses_hapus_kategori' => ['info', 'Kategori komisi berhasil dihapus.'],
 ];
 
 if (array_key_exists($pesan, $alerts)): 

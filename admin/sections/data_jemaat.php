@@ -80,6 +80,38 @@
     </div>
 </form>
 
+<div class="card card-custom p-4 mt-3 shadow-sm">
+    <h6 class="fw-bold mb-3 text-primary">Manajemen Kategori Komisi</h6>
+    <form action="proses/proses_datajemaat.php" method="POST" class="row g-3 mb-4">
+        <div class="col-md-9">
+            <input type="text" name="nama_kategori" class="form-control" placeholder="Nama Kategori Baru (Contoh: Komisi Pria Kaum Bapa)" required>
+        </div>
+        <div class="col-md-3">
+            <button type="submit" name="tambah_kategori" class="btn btn-primary w-100">Tambah Kategori</button>
+        </div>
+    </form>
+    
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr><th>Nama Kategori</th><th class="text-center">Aksi</th></tr>
+            </thead>
+            <tbody>
+                <?php 
+                $kat = mysqli_query($koneksi, "SELECT * FROM kategori_komisi");
+                while($r = mysqli_fetch_assoc($kat)): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($r['nama_kategori']); ?></td>
+                    <td class="text-center">
+                        <a href="proses/proses_datajemaat.php?hapus_kategori=1&id=<?php echo $r['id']; ?>" class="text-danger" onclick="return confirm('Hapus kategori ini?')"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div class="card card-custom p-4 mt-4 shadow-sm">
     <h6 class="fw-bold mb-3 text-primary">Tambah Anggota Komisi Baru</h6>
     <form action="proses/proses_datajemaat.php" method="POST">
@@ -91,17 +123,22 @@
                 <input type="text" name="jabatan" class="form-control" placeholder="Jabatan (mis: Ketua)" required>
             </div>
             <div class="col-md-3">
-                <select name="kategori" class="form-select">
-                    <option value="bipra">Komisi Pria Kaum Bapa</option>
-                    <option value="komisi_kerja">Komisi Wanita Kaum Ibu</option>
-                    <option value="lansia">Komisi Pemuda</option>
-                    <option value="bipra">Komisi Remaja</option>
-                    <option value="komisi_kerja">Komisi Anak Sekolah Minggu</option>
-                    <option value="lansia">Komisi Kerja</option>
+                <select name="kategori" class="form-select" required>
+                    <option value="" disabled selected>Pilih Kategori Komisi</option>
+                    <?php 
+                    // Mengambil data kategori dari database secara dinamis
+                    $kat = mysqli_query($koneksi, "SELECT * FROM kategori_komisi ORDER BY nama_kategori ASC");
+                    while($r = mysqli_fetch_assoc($kat)) {
+                        // Menggunakan nama_kategori sebagai value agar konsisten dengan tabel struktur_organisasi
+                        echo "<option value='".htmlspecialchars($r['nama_kategori'])."'>".htmlspecialchars($r['nama_kategori'])."</option>";
+                    }
+                    ?>
                 </select>
             </div>
             <div class="col-md-3">
-                <button type="submit" name="tambah_anggota_komisi" class="btn btn-success w-100">Simpan</button>
+                <button type="submit" name="tambah_anggota_komisi" class="btn btn-success w-100">
+                    <i class="bi bi-plus-circle me-1"></i> Simpan Anggota
+                </button>
             </div>
         </div>
     </form>

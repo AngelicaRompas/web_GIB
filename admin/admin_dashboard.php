@@ -313,192 +313,43 @@ body{
         <div class="tab-content" id="v-pills-tabContent">
 
             <!-- =========================
-                 BERANDA ADMIN
-            ========================= -->
-
-            <div class="tab-pane fade show active"
-                 id="beranda-admin"
-                 role="tabpanel">
-
-                <div class="welcome-card p-5 mb-5">
-
-                    <h2 class="fw-bold mb-3">
-                        Selamat Datang di Admin Panel
-                    </h2>
-
-                    <p class="mb-0 opacity-75">
-                        Kelola seluruh data website GMIM Imanuel Bahu
-                        mulai dari profil gereja, event, renungan,
-                        keuangan, hingga struktur pelayanan.
-                    </p>
-
-                </div>
-
-                <div class="row g-4">
-
-                    <!-- EVENT -->
-
-                    <div class="col-md-6 col-xl-3">
-
-                        <div class="card dashboard-card h-100">
-
-                            <div class="card-body p-4">
-
-                                <div class="d-flex justify-content-between align-items-center">
-
-                                    <div>
-
-                                        <small class="text-muted">
-                                            Total Event
-                                        </small>
-
-                                        <h2 class="fw-bold mt-2 mb-0">
-                                            <?= $totalEvent['total']; ?>
-                                        </h2>
-
-                                    </div>
-
-                                    <div class="dashboard-icon bg-purple-soft">
-                                        <i class="bi bi-calendar-event-fill"></i>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- RENUNGAN -->
-
-                    <div class="col-md-6 col-xl-3">
-
-                        <div class="card dashboard-card h-100">
-
-                            <div class="card-body p-4">
-
-                                <div class="d-flex justify-content-between align-items-center">
-
-                                    <div>
-
-                                        <small class="text-muted">
-                                            Renungan Harian
-                                        </small>
-
-                                        <h2 class="fw-bold mt-2 mb-0">
-                                            <?= $totalRenungan['total']; ?>
-                                        </h2>
-
-                                    </div>
-
-                                    <div class="dashboard-icon bg-indigo-soft">
-                                        <i class="bi bi-journal-bookmark-fill"></i>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- STRUKTUR -->
-
-                    <div class="col-md-6 col-xl-3">
-
-                        <div class="card dashboard-card h-100">
-
-                            <div class="card-body p-4">
-
-                                <div class="d-flex justify-content-between align-items-center">
-
-                                    <div>
-
-                                        <small class="text-muted">
-                                            Struktur Pelayan
-                                        </small>
-
-                                        <h2 class="fw-bold mt-2 mb-0">
-                                            <?= $totalStruktur['total']; ?>
-                                        </h2>
-
-                                    </div>
-
-                                    <div class="dashboard-icon bg-pink-soft">
-                                        <i class="bi bi-diagram-3-fill"></i>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- NAVIGASI -->
-
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card dashboard-card h-100">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-
-                                        <small class="text-muted">Virtual Tour</small>
-                                        <h2 class="fw-bold mt-2 mb-0">
-                                            <?= $totalNavigasi['total']; ?>
-                                        </h2>
-
-                                    </div>
-
-                                    <div class="dashboard-icon bg-violet-soft">
-                                        <i class="bi bi-compass-fill"></i>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- =========================
                  SECTION ADMIN
             ========================= -->
 
+            <div class="tab-pane fade show active" id="beranda-admin" role="tabpanel">
+                <?php include 'sections/admin_beranda.php'; ?>
+            </div>
+
             <div class="tab-pane fade" id="edit-data-jemaat" role="tabpanel">
-                <?php include 'sections/data_jemaat.php'; ?>
+                <?php include 'sections/admin_DataJemaat.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-profil" role="tabpanel">
-                <?php include 'sections/profil.php'; ?>
+                <?php include 'sections/admin_Profil.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-warta" role="tabpanel">
-                <?php include 'sections/warta_jemaat.php'; ?>
+                <?php include 'sections/admin_WartaJemaat.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-event" role="tabpanel">
-                <?php include 'sections/event.php'; ?>
+                <?php include 'sections/admin_Event.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-keuangan" role="tabpanel">
-                <?php include 'sections/keuangan.php'; ?>
+                <?php include 'sections/admin_Keuangan.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-struktur" role="tabpanel">
-                <?php include 'sections/struktur.php'; ?>
+                <?php include 'sections/admin_Struktur.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-renungan" role="tabpanel">
-                <?php include 'sections/renungan.php'; ?>
+                <?php include 'sections/admin_Renungan.php'; ?>
             </div>
 
             <div class="tab-pane fade" id="edit-navigasi" role="tabpanel">
-                <?php include 'sections/navigasi.php'; ?>
+                <?php include 'sections/admin_Navigasi.php'; ?>
             </div>
         </div>
     </div>

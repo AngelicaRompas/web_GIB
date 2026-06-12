@@ -29,7 +29,6 @@
 
             <i class="bi bi-house-door-fill me-2"></i>
             Beranda
-
         </button>
 
         <button class="nav-link nav-link-admin text-start py-3"
@@ -48,8 +47,7 @@
                 type="button">
 
             <i class="bi bi-person-gear me-2"></i>
-            Edit Profil / Sejarah
-
+            Edit Sejarah
         </button>
 
         <button class="nav-link nav-link-admin text-start py-3"
@@ -59,7 +57,6 @@
 
             <i class="bi bi-file-earmark-text-fill me-2"></i>
             Edit Warta Jemaat
-
         </button>
 
         <button class="nav-link nav-link-admin text-start py-3"
@@ -69,7 +66,6 @@
 
             <i class="bi bi-calendar-event me-2"></i>
             Edit Event
-
         </button>
 
         <button class="nav-link nav-link-admin text-start py-3"
@@ -78,8 +74,7 @@
                 type="button">
 
             <i class="bi bi-cash-coin me-2"></i>
-            Edit Warta Keuangan
-
+            Edit Keuangan
         </button>
 
         <button class="nav-link nav-link-admin text-start py-3"
@@ -89,7 +84,6 @@
 
             <i class="bi bi-diagram-3-fill me-2"></i>
             Edit Struktur Pelayan
-
         </button>
 
         <button class="nav-link nav-link-admin text-start py-3"
@@ -98,18 +92,7 @@
                 type="button">
 
             <i class="bi bi-journal-bookmark-fill me-2"></i>
-            Edit Renungan Harian
-
-        </button>
-
-        <button class="nav-link nav-link-admin text-start py-3"
-                data-bs-toggle="pill"
-                data-bs-target="#edit-navigasi"
-                type="button">
-
-            <i class="bi bi-compass-fill me-2"></i>
-            Edit Tur Virtual 360°
-
+            Edit Renungan
         </button>
 
     </div>

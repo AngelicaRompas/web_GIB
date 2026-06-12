@@ -18,7 +18,11 @@ $alerts = [
     'sukses_hapus'           => ['info', 'Data anggota komisi berhasil dihapus.'],
     'sukses_kategori'      => ['success', 'Kategori komisi baru berhasil ditambahkan!'],
     'sukses_hapus_kategori' => ['info', 'Kategori komisi berhasil dihapus.'],
-];
+    'sukses_edit_kategori' => ['success', 'Kategori komisi berhasil diperbarui!'],
+    'kategori_sudah_ada'   => ['warning', 'Kategori komisi tersebut sudah ada.'],
+    'kategori_kosong'      => ['warning', 'Nama kategori tidak boleh kosong.'],
+    'kategori_dipakai'     => ['danger', 'Kategori tidak dapat dihapus karena masih digunakan oleh anggota komisi.'],
+    ];
 
 if (array_key_exists($pesan, $alerts)): 
     $type = $alerts[$pesan][0];
@@ -42,7 +46,6 @@ if (array_key_exists($pesan, $alerts)):
                 // Bersihkan URL agar saat di-refresh alert tidak muncul lagi
                 const url = new URL(window.location);
                 url.searchParams.delete('pesan');
-                url.searchParams.delete('tab');
                 window.history.replaceState({}, document.title, url.toString());
             }
         });

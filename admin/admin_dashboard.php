@@ -441,19 +441,12 @@ body{
                     <!-- NAVIGASI -->
 
                     <div class="col-md-6 col-xl-3">
-
                         <div class="card dashboard-card h-100">
-
                             <div class="card-body p-4">
-
                                 <div class="d-flex justify-content-between align-items-center">
-
                                     <div>
 
-                                        <small class="text-muted">
-                                            Virtual Tour
-                                        </small>
-
+                                        <small class="text-muted">Virtual Tour</small>
                                         <h2 class="fw-bold mt-2 mb-0">
                                             <?= $totalNavigasi['total']; ?>
                                         </h2>
@@ -467,13 +460,9 @@ body{
                                 </div>
 
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
             <!-- =========================
@@ -511,17 +500,12 @@ body{
             <div class="tab-pane fade" id="edit-navigasi" role="tabpanel">
                 <?php include 'sections/navigasi.php'; ?>
             </div>
-
         </div>
-
     </div>
-
 </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
 
 /* =========================
@@ -531,25 +515,16 @@ body{
 window.addEventListener('DOMContentLoaded', () => {
 
     const urlParams = new URLSearchParams(window.location.search);
-
     const tabId = urlParams.get('tab') || 'beranda-admin';
-
     const targetPane = document.getElementById(tabId);
-
     const targetBtn = document.querySelector(
         `[data-bs-target="#${tabId}"]`
     );
 
     if(targetPane && targetBtn){
-
-        document.querySelectorAll('.tab-pane')
-        .forEach(el => el.classList.remove('show','active'));
-
-        document.querySelectorAll('.nav-link-admin')
-        .forEach(el => el.classList.remove('active'));
-
+        document.querySelectorAll('.tab-pane') .forEach(el => el.classList.remove('show','active'));
+        document.querySelectorAll('.nav-link-admin') .forEach(el => el.classList.remove('active'));
         targetPane.classList.add('show','active');
-
         targetBtn.classList.add('active');
     }
 });
@@ -562,20 +537,32 @@ document.querySelectorAll('.nav-link-admin').forEach(button => {
 
     button.addEventListener('click', () => {
 
+        const target = button.getAttribute('data-bs-target');
+
+        if(target){
+
+            const tabId = target.replace('#','');
+            const url = new URL(window.location);
+            url.searchParams.set('tab', tabId);
+            url.searchParams.delete('pesan');
+            window.history.replaceState(
+                {},
+                '',
+                url.toString()
+            );
+        }
+
         const sidebar =
         bootstrap.Offcanvas.getInstance(
             document.getElementById('mobileSidebar')
         );
-
         if(sidebar){
             sidebar.hide();
         }
-
     });
 
 });
 
 </script>
-
 </body>
 </html>

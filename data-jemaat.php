@@ -426,35 +426,66 @@ list($labelsBipra, $dataBipra) = getDataChart('bipra', $dataPerKategori, $totalA
 
                 <div class="tab-pane fade" id="pills-komisi" role="tabpanel">
     <div class="row g-4">
-        <?php 
-        // Daftar kategori dan judulnya
-        $kategori_list = [
-            'bipra' => 'Komisi BIPRA', 
-            'komisi_kerja' => 'Komisi Kerja', 
-            'lansia' => 'Lansia'
-        ];
 
-        foreach($kategori_list as $cat => $title): ?>
+        <?php
+        $getKategori = mysqli_query(
+            $koneksi,
+            "SELECT * FROM kategori_komisi ORDER BY nama_kategori ASC"
+        );
+
+        while($kat = mysqli_fetch_assoc($getKategori)):
+            $namaKategori = $kat['nama_kategori'];
+        ?>
+
         <div class="col-md-4">
-            <div class="card stat-card p-4 h-100 shadow-sm border-0" style="background: rgba(255, 255, 255, 0.9);">
-                <h5 class="fw-bold text-primary mb-4 text-center border-bottom pb-2"><?php echo $title; ?></h5>
+            <div class="card stat-card p-4 h-100 shadow-sm border-0"
+                 style="background: rgba(255,255,255,0.9);">
+
+                <h5 class="fw-bold text-primary mb-4 text-center border-bottom pb-2">
+                    <?php echo htmlspecialchars($namaKategori); ?>
+                </h5>
+
                 <div class="d-flex flex-column gap-2">
-                    <?php 
-                    $q = mysqli_query($koneksi, "SELECT * FROM struktur_organisasi WHERE kategori='$cat' ORDER BY id ASC");
+
+                    <?php
+                    $q = mysqli_query(
+                        $koneksi,
+                        "SELECT * 
+                         FROM struktur_organisasi
+                         WHERE kategori='$namaKategori'
+                         ORDER BY id ASC"
+                    );
+
                     if(mysqli_num_rows($q) > 0):
-                        while($r = mysqli_fetch_assoc($q)): ?>
-                            <div class="p-2 border-bottom border-light">
-                                <span class="fw-bold text-dark d-block"><?php echo htmlspecialchars($r['nama']); ?></span>
-                                <span class="text-muted" style="font-size: 0.85rem;"><?php echo htmlspecialchars($r['jabatan']); ?></span>
-                            </div>
-                        <?php endwhile; 
-                    else: ?>
-                        <p class="text-muted text-center small">Data belum tersedia.</p>
+                        while($r = mysqli_fetch_assoc($q)):
+                    ?>
+
+                    <div class="p-2 border-bottom border-light">
+                        <span class="fw-bold d-block">
+                            <?php echo htmlspecialchars($r['nama']); ?>
+                        </span>
+                        <span class="text-muted" style="font-size:0.85rem;">
+                            <?php echo htmlspecialchars($r['jabatan']); ?>
+                        </span>
+                    </div>
+
+                    <?php
+                        endwhile;
+                    else:
+                    ?>
+
+                    <p class="text-muted text-center small">
+                        Data belum tersedia.
+                    </p>
+
                     <?php endif; ?>
+
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
+
+        <?php endwhile; ?>
+
     </div>
 </div>
             </div>

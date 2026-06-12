@@ -80,136 +80,384 @@
     </div>
 </form>
 
+<!-- ========================= -->
+<!-- MANAJEMEN KATEGORI KOMISI -->
+<!-- ========================= -->
 <div class="card card-custom p-4 mt-3 shadow-sm">
     <h6 class="fw-bold mb-3 text-primary">Manajemen Kategori Komisi</h6>
+
     <form action="proses/proses_datajemaat.php" method="POST" class="row g-3 mb-4">
         <div class="col-md-9">
-            <input type="text" name="nama_kategori" class="form-control" placeholder="Nama Kategori Baru (Contoh: Komisi Pria Kaum Bapa)" required>
+            <input type="text"
+                   name="nama_kategori"
+                   class="form-control"
+                   placeholder="Nama Kategori Baru"
+                   required>
         </div>
         <div class="col-md-3">
-            <button type="submit" name="tambah_kategori" class="btn btn-primary w-100">Tambah Kategori</button>
+            <button type="submit"
+                    name="tambah_kategori"
+                    class="btn btn-primary w-100">
+                Tambah Kategori
+            </button>
         </div>
     </form>
-    
+
     <div class="table-responsive">
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr><th>Nama Kategori</th><th class="text-center">Aksi</th></tr>
-            </thead>
-            <tbody>
-                <?php 
-                $kat = mysqli_query($koneksi, "SELECT * FROM kategori_komisi");
-                while($r = mysqli_fetch_assoc($kat)): ?>
+        <table class="table table-bordered table-sm align-middle">
+            <thead class="table-light">
                 <tr>
-                    <td><?php echo htmlspecialchars($r['nama_kategori']); ?></td>
+                    <th>Nama Kategori</th>
+                    <th width="120" class="text-center">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php
+                $kat = mysqli_query(
+                    $koneksi,
+                    "SELECT * FROM kategori_komisi ORDER BY nama_kategori ASC"
+                );
+
+                while($r = mysqli_fetch_assoc($kat)):
+                ?>
+                <tr>
+
+                    <td>
+                        <?php echo htmlspecialchars($r['nama_kategori']); ?>
+                    </td>
+
                     <td class="text-center">
-                        <a href="proses/proses_datajemaat.php?hapus_kategori=1&id=<?php echo $r['id']; ?>" class="text-danger" onclick="return confirm('Hapus kategori ini?')"><i class="bi bi-trash"></i></a>
+
+                        <!-- EDIT -->
+                        <button
+                            class="btn btn-warning btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editKategori<?php echo $r['id']; ?>">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <!-- HAPUS -->
+                        <a href="proses/proses_datajemaat.php?hapus_kategori=1&id=<?php echo $r['id']; ?>"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Hapus kategori ini?')">
+
+                            <i class="bi bi-trash"></i>
+                        </a>
+
                     </td>
                 </tr>
+
+                <!-- MODAL EDIT KATEGORI -->
+                <div class="modal fade"
+                     id="editKategori<?php echo $r['id']; ?>"
+                     tabindex="-1">
+
+                    <div class="modal-dialog">
+
+                        <form action="proses/proses_datajemaat.php"
+                              method="POST">
+
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        Edit Kategori
+                                    </h5>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="<?php echo $r['id']; ?>">
+
+                                    <input type="hidden"
+                                           name="nama_lama"
+                                           value="<?php echo htmlspecialchars($r['nama_kategori']); ?>">
+
+                                    <label class="form-label">
+                                        Nama Kategori
+                                    </label>
+
+                                    <input type="text"
+                                           name="nama_kategori"
+                                           class="form-control"
+                                           value="<?php echo htmlspecialchars($r['nama_kategori']); ?>"
+                                           required>
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="submit"
+                                            name="edit_kategori"
+                                            class="btn btn-warning text-white">
+
+                                        Update
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 </div>
 
+<!-- ========================= -->
+<!-- TAMBAH ANGGOTA KOMISI -->
+<!-- ========================= -->
 <div class="card card-custom p-4 mt-4 shadow-sm">
-    <h6 class="fw-bold mb-3 text-primary">Tambah Anggota Komisi Baru</h6>
+
+    <h6 class="fw-bold mb-3 text-primary">
+        Tambah Anggota Komisi Baru
+    </h6>
+
     <form action="proses/proses_datajemaat.php" method="POST">
+
         <div class="row g-3">
+
             <div class="col-md-3">
-                <input type="text" name="nama" class="form-control" placeholder="Nama Lengkap" required>
+                <input type="text"
+                       name="nama"
+                       class="form-control"
+                       placeholder="Nama Lengkap"
+                       required>
             </div>
+
             <div class="col-md-3">
-                <input type="text" name="jabatan" class="form-control" placeholder="Jabatan (mis: Ketua)" required>
+                <input type="text"
+                       name="jabatan"
+                       class="form-control"
+                       placeholder="Jabatan"
+                       required>
             </div>
+
             <div class="col-md-3">
-                <select name="kategori" class="form-select" required>
-                    <option value="" disabled selected>Pilih Kategori Komisi</option>
-                    <?php 
-                    // Mengambil data kategori dari database secara dinamis
-                    $kat = mysqli_query($koneksi, "SELECT * FROM kategori_komisi ORDER BY nama_kategori ASC");
-                    while($r = mysqli_fetch_assoc($kat)) {
-                        // Menggunakan nama_kategori sebagai value agar konsisten dengan tabel struktur_organisasi
-                        echo "<option value='".htmlspecialchars($r['nama_kategori'])."'>".htmlspecialchars($r['nama_kategori'])."</option>";
-                    }
+
+                <select name="kategori"
+                        class="form-select"
+                        required>
+
+                    <option value="">
+                        Pilih Kategori
+                    </option>
+
+                    <?php
+                    $kat = mysqli_query(
+                        $koneksi,
+                        "SELECT * FROM kategori_komisi
+                         ORDER BY nama_kategori ASC"
+                    );
+
+                    while($r = mysqli_fetch_assoc($kat)):
                     ?>
+
+                    <option value="<?php echo htmlspecialchars($r['nama_kategori']); ?>">
+                        <?php echo htmlspecialchars($r['nama_kategori']); ?>
+                    </option>
+
+                    <?php endwhile; ?>
+
                 </select>
+
             </div>
+
             <div class="col-md-3">
-                <button type="submit" name="tambah_anggota_komisi" class="btn btn-success w-100">
-                    <i class="bi bi-plus-circle me-1"></i> Simpan Anggota
+                <button type="submit"
+                        name="tambah_anggota_komisi"
+                        class="btn btn-success w-100">
+
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Simpan Anggota
                 </button>
             </div>
+
         </div>
+
     </form>
+
 </div>
 
-<div class="card card-custom p-4 mt-3 shadow-sm">
-    <h6 class="fw-bold mb-3">Daftar Anggota Komisi Terinput</h6>
-    <table class="table table-hover align-middle">
-        <thead class="table-light">
-            <tr><th>Nama</th><th>Jabatan</th><th>Kategori</th><th class="text-center">Aksi</th></tr>
-        </thead>
-        <tbody>
-            <?php 
-            $q = mysqli_query($koneksi, "SELECT * FROM struktur_organisasi WHERE kategori IN ('bipra', 'komisi_kerja', 'lansia') ORDER BY kategori, id ASC");
-            while($k = mysqli_fetch_assoc($q)): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($k['nama']); ?></td>
-                <td><?php echo htmlspecialchars($k['jabatan']); ?></td>
-                <td><span class="badge bg-secondary"><?php echo strtoupper($k['kategori']); ?></span></td>
-                <td class="text-center">
-                    <button type="button" class="btn btn-sm btn-warning" 
-                            onclick="bukaEdit('<?php echo $k['id']; ?>', '<?php echo htmlspecialchars($k['nama']); ?>', '<?php echo htmlspecialchars($k['jabatan']); ?>', '<?php echo $k['kategori']; ?>')">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>
-                    <a href="proses/proses_datajemaat.php?hapus_komisi=1&id=<?php echo $k['id']; ?>" 
-                       class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus?')">
-                        <i class="bi bi-trash"></i>
-                    </a>
-                </td>
-            </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-</div> 
+<!-- ========================= -->
+<!-- DAFTAR ANGGOTA KOMISI -->
+<!-- ========================= -->
+<div class="card card-custom p-4 mt-4 shadow-sm">
 
-<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Anggota Komisi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <h6 class="fw-bold mb-3 text-primary">
+        Daftar Anggota Komisi
+    </h6>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                    <th>Kategori</th>
+                    <th width="120" class="text-center">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <?php
+                $anggota = mysqli_query(
+                    $koneksi,
+                    "SELECT so.*
+                     FROM struktur_organisasi so
+                     INNER JOIN kategori_komisi kk
+                     ON so.kategori = kk.nama_kategori
+                     ORDER BY so.kategori, so.id"
+                );
+
+                while($a = mysqli_fetch_assoc($anggota)):
+                ?>
+
+                <tr>
+
+                    <td><?php echo htmlspecialchars($a['nama']); ?></td>
+
+                    <td><?php echo htmlspecialchars($a['jabatan']); ?></td>
+
+                    <td><?php echo htmlspecialchars($a['kategori']); ?></td>
+
+                    <td class="text-center">
+
+                        <button
+                            class="btn btn-warning btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editAnggota<?php echo $a['id']; ?>">
+
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <a href="proses/proses_datajemaat.php?hapus_komisi=1&id=<?php echo $a['id']; ?>"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Hapus anggota komisi ini?')">
+
+                            <i class="bi bi-trash"></i>
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                <!-- MODAL EDIT ANGGOTA -->
+                <div class="modal fade"
+                     id="editAnggota<?php echo $a['id']; ?>"
+                     tabindex="-1">
+
+                    <div class="modal-dialog">
+
+                        <form action="proses/proses_datajemaat.php"
+                              method="POST">
+
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">
+                                        Edit Anggota Komisi
+                                    </h5>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="<?php echo $a['id']; ?>">
+
+                                    <div class="mb-3">
+                                        <label>Nama</label>
+                                        <input type="text"
+                                               name="nama"
+                                               class="form-control"
+                                               value="<?php echo htmlspecialchars($a['nama']); ?>"
+                                               required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label>Jabatan</label>
+                                        <input type="text"
+                                               name="jabatan"
+                                               class="form-control"
+                                               value="<?php echo htmlspecialchars($a['jabatan']); ?>"
+                                               required>
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label>Kategori</label>
+
+                                        <select name="kategori"
+                                                class="form-select"
+                                                required>
+
+                                            <?php
+                                            $kategoriEdit = mysqli_query(
+                                                $koneksi,
+                                                "SELECT * FROM kategori_komisi
+                                                 ORDER BY nama_kategori ASC"
+                                            );
+
+                                            while($k = mysqli_fetch_assoc($kategoriEdit)):
+                                            ?>
+
+                                            <option
+                                                value="<?php echo htmlspecialchars($k['nama_kategori']); ?>"
+                                                <?php echo ($a['kategori'] == $k['nama_kategori']) ? 'selected' : ''; ?>>
+
+                                                <?php echo htmlspecialchars($k['nama_kategori']); ?>
+
+                                            </option>
+
+                                            <?php endwhile; ?>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="submit"
+                                            name="edit_anggota_komisi"
+                                            class="btn btn-warning text-white">
+
+                                        Update
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
                     </div>
-                    <form action="proses/proses_datajemaat.php" method="POST">
-                        <div class="modal-body">
-                            <input type="hidden" name="id" id="edit_id">
-                            <div class="mb-3">
-                                <label>Nama</label>
-                                <input type="text" name="nama" id="edit_nama" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Jabatan</label>
-                                <input type="text" name="jabatan" id="edit_jabatan" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label>Kategori</label>
-                                <select name="kategori" id="edit_kategori" class="form-select">
-                                    <?php 
-                                    $kat = mysqli_query($koneksi, "SELECT * FROM kategori_komisi");
-                                    while($r = mysqli_fetch_assoc($kat)) echo "<option value='".$r['nama_kategori']."'>".strtoupper($r['nama_kategori'])."</option>";
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" name="edit_anggota_komisi" class="btn btn-warning">Update Data</button>
-                        </div>
-                    </form>
-                    </div>
+
                 </div>
-                </div>
+
+                <?php endwhile; ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 
 <script>
 // Fungsi untuk memicu modal

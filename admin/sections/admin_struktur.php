@@ -94,25 +94,23 @@
             </h6>
             <p class="small text-muted mb-4">Gunakan form ini untuk menambah personil pelayan baru di luar struktur utama.</p>
             
-            <form action="proses/proses_struktur.php" method="POST" enctype="multipart/form-data">
+            <form action="proses/proses_struktur.php" method="POST">
                 <input type="hidden" name="jenis_update" value="tambah_bpmj">
-                
-                <div class="mb-3">
-                    <label class="form-label small fw-bold">Nama Jabatan Baru</label>
-                    <input type="text" name="jabatan_baru" class="form-control bg-light" placeholder="Pendeta Pelayanan 3" required>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="form-label small fw-bold">Nama Lengkap & Gelar</label>
-                    <input type="text" name="nama_lengkap_baru" class="form-control" placeholder="Masukkan nama hamba tuhan" required>
-                </div>
-                
+
                 <div class="mb-4">
-                    <label class="form-label small fw-bold">Upload Foto Profil</label>
-                    <input type="file" name="foto_profil_baru" class="form-control" accept="image/*" required>
+                    <label class="form-label small fw-bold">Nama Jabatan Baru</label>
+                    <input
+                        type="text"
+                        name="jabatan_baru"
+                        class="form-control bg-light"
+                        placeholder="Contoh: Anggota BPMJ"
+                        required>
                 </div>
-                
-                <button type="submit" name="simpan_tambah_bpmj" class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2">
+
+                <button
+                    type="submit"
+                    name="simpan_tambah_bpmj"
+                    class="btn btn-outline-primary rounded-pill w-100 fw-bold py-2">
                     <i class="bi bi-plus-circle-fill me-2"></i>Daftarkan Jabatan Baru
                 </button>
             </form>

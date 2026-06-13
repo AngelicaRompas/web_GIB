@@ -1,6 +1,7 @@
-        :root {
-            --primary-gradient: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
-            --church-blue: #0056b3;
+:root {
+            /* Perubahan utama: Gradient dan warna utama jadi Ungu */
+            --primary-gradient: linear-gradient(135deg, #6f42c1 0%, #4a2c85 100%);
+            --church-blue: #6f42c1; 
             --slate-dark: #1e293b;
             --soft-slate: #64748b;
             --bg-canvas: #f8fafc;
@@ -12,9 +13,9 @@
             color: var(--slate-dark);
         }
 
+        /* Navbar diatur agar mengikuti navbar.php (tidak perlu background-color di sini jika sudah di navbar.php) */
         .navbar {
             z-index: 10000 !important;
-            background-color: var(--church-blue) !important;
             position: relative;
         }
 
@@ -34,21 +35,20 @@
         }
 
         .stat-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 1);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-    transition: all 0.3s ease;
-}
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
 
-/* Tambahkan ini agar background aurora muncul di file ini */
-.digital-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-.aurora-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+        .digital-grid { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .aurora-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
 
         .stat-card:hover { 
             transform: translateY(-4px); 
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08); 
+            box-shadow: 0 10px 25px rgba(111, 66, 193, 0.1); 
         }
 
         .icon-box {
@@ -58,11 +58,11 @@
             font-size: 1.4rem;
         }
 
-        .bg-blue-light { background: #eff6ff; color: #2563eb; }
+        /* Warna Light diubah ke nuansa Ungu agar serasi */
+        .bg-blue-light { background: #f3effb; color: #6f42c1; }
         .bg-green-light { background: #f0fdf4; color: #16a34a; }
         .bg-orange-light { background: #fff7ed; color: #ea580c; }
         
-        /* Tinggi kontainer grafik disesuaikan agar proporsional saat berjajar 4 kolom */
         .chart-container { 
             position: relative; 
             height: 200px; 
@@ -101,26 +101,79 @@
         }
         
         .nav-pills-custom .nav-link.active {
-            background-color: var(--church-blue);
+            background-color: var(--church-blue) !important;
             color: white !important;
-            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+            box-shadow: 0 4px 12px rgba(111, 66, 193, 0.2);
         }
 
-        .profile-img-container {
-            position: relative;
-            display: inline-block;
-            border-radius: 50%;
-            background: #ffffff;
-            padding: 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .bpmj-card{
+        border:none;
+        border-radius:20px;
+        overflow:hidden;
+        transition:.3s;
+        background:#fff;
+        box-shadow:0 5px 20px rgba(0,0,0,.06);
+        max-width:220px;
+        margin:auto;
         }
 
-        .pendeta-pelayan-card img {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .bpmj-card:hover{
+            transform:translateY(-6px);
+            box-shadow:0 12px 30px rgba(111,66,193,.15);
         }
-        .pendeta-pelayan-card:hover img {
-            transform: scale(1.05);
+
+        .bpmj-photo{
+            width:100%;
+            aspect-ratio:1/1;
+            object-fit:cover;
+            cursor:pointer;
+        }
+
+        .bpmj-info{
+            padding:10px 12px;
+        }
+
+        .bpmj-name{
+            font-weight:700;
+            font-size:.8rem;
+            margin-bottom:4px;
+            color:#1e293b;
+        }
+
+        .bpmj-position{
+            font-size:.72rem;
+            color:#64748b;
+        }
+
+        .ketua-card{
+            border:2px solid #0d6efd;
+        }
+
+        .ketua-card .bpmj-name{
+            font-size:1.1rem;
+        }
+
+        .ketua-card .bpmj-position{
+            color:#0d6efd;
+            font-weight:700;
+            text-transform:uppercase;
+        }
+
+       
+
+        #fotoModal .modal-dialog{
+            max-width: 700px;
+        }
+
+        #fotoModal .modal-content{
+            background: transparent;
+        }
+
+        #popupImage{
+            width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 20px;
         }
 
         @media (max-width: 1199.98px) {

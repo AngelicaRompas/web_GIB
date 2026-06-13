@@ -61,33 +61,54 @@ elseif (isset($_POST['simpan_edit_pelsus'])) {
 }
 
 // ========================================================
-// 3. FITUR BARU: PROSES TAMBAH JABATAN BARU (BPMJ/PENDETA)
+// 3. PROSES TAMBAH JABATAN BARU (TANPA NAMA & FOTO)
 // ========================================================
 elseif (isset($_POST['simpan_tambah_bpmj'])) {
-    $jabatan_baru = mysqli_real_escape_string($koneksi, $_POST['jabatan_baru']);
-    $nama         = mysqli_real_escape_string($koneksi, $_POST['nama_lengkap_baru']);
-    
-    $file_name  = $_FILES['foto_profil_baru']['name'];
-    $file_tmp   = $_FILES['foto_profil_baru']['tmp_name'];
-    $file_error = $_FILES['foto_profil_baru']['error'];
 
-    $nama_foto_baru = "default-user.jpg"; // Fallback default
+    $jabatan_baru = mysqli_real_escape_string(
+        $koneksi,
+        trim($_POST['jabatan_baru'])
+    );
 
-    if ($file_error === 0) {
-        $x = explode('.', $file_name);
-        $ekstensi = strtolower(end($x));
-        $nama_foto_baru = "profile_" . uniqid() . "." . $ekstensi;
-        $folder_tujuan  = "../../assets/images/" . $nama_foto_baru;
-        move_uploaded_file($file_tmp, $folder_tujuan);
+    // Cegah jabatan ganda
+    $cek = mysqli_query(
+        $koneksi,
+        "SELECT id FROM struktur_organisasi
+         WHERE kategori='bpmj'
+         AND jabatan='$jabatan_baru'"
+    );
+
+    if(mysqli_num_rows($cek) > 0){
+        header("Location: ../admin_dashboard.php?pesan=jabatan_sudah_ada&tab=edit-struktur");
+        exit;
     }
 
-    $query = "INSERT INTO struktur_organisasi (kategori, jabatan, nama, foto) VALUES ('bpmj', '$jabatan_baru', '$nama', '$nama_foto_baru')";
-    
+    $query = "
+        INSERT INTO struktur_organisasi
+        (
+            kategori,
+            jabatan,
+            nama,
+            foto
+        )
+        VALUES
+        (
+            'bpmj',
+            '$jabatan_baru',
+            '',
+            'default-user.jpg'
+        )
+    ";
+
     if (mysqli_query($koneksi, $query)) {
+
         header("Location: ../admin_dashboard.php?pesan=sukses_struktur&tab=edit-struktur");
         exit;
+
     } else {
+
         die("Gagal menambah jabatan baru: " . mysqli_error($koneksi));
+
     }
 }
 

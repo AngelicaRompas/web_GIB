@@ -188,8 +188,8 @@ $queryPast = mysqli_query($koneksi, "SELECT * FROM events WHERE tanggal < '$toda
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>" style="opacity: 0.9;">
                         <div class="event-card-glass h-100 d-flex flex-column border-0">
                             <div class="position-relative overflow-hidden">
-                                <span class="badge bg-secondary badge-kategori" style="background-color: #6f42c1;" rounded-pill px-3 py-2">Selesai</span>
-                                <img src="assets/images/<?php echo htmlspecialchars($row['poster']); ?>" class="w-100 img-event" alt="Poster" style="filter: grayscale(40%);" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
+                                <span class="badge bg-secondary badge-kategori" style="background-color: #6f42c1;">Selesai</span>
+                                <img src="assets/gallery/<?php echo htmlspecialchars($row['poster']); ?>" class="w-100 img-event" alt="Poster" style="filter: grayscale(40%);" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
                             </div>
                             <div class="card-body p-4 d-flex flex-column flex-grow-1">
                                 <h5 class="fw-bold text-secondary mb-3"><?php echo htmlspecialchars($row['judul']); ?></h5>
@@ -197,9 +197,9 @@ $queryPast = mysqli_query($koneksi, "SELECT * FROM events WHERE tanggal < '$toda
                                     <i class="bi bi-calendar-check me-2"></i><?php echo date('d F Y', strtotime($row['tanggal'])); ?>
                                 </div>
                                 <div class="mt-auto">
-                                    <a href="detail-event.php?id=<?php echo $row['id']; ?>" class="btn btn-outline-secondary rounded-pill w-100 fw-bold">
+                                    <button type="button" class="btn btn-outline-secondary rounded-pill w-100 fw-bold" data-bs-toggle="modal" data-bs-target="#modalNews<?php echo $row['id']; ?>">
                                         Baca Dokumentasi
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -218,6 +218,45 @@ $queryPast = mysqli_query($koneksi, "SELECT * FROM events WHERE tanggal < '$toda
         </div>
     </div>
 </div>
+
+<?php
+// Pastikan tidak ada karakter spasi atau baris kosong sebelum <?php
+mysqli_data_seek($queryPast, 0); 
+while($row = mysqli_fetch_assoc($queryPast)): ?>
+
+<div class="modal fade" id="modalNews<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="modalNewsLabel<?php echo $row['id']; ?>" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header border-0">
+                <h5 class="fw-bold" id="modalNewsLabel<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['judul']); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="assets/gallery/<?php echo htmlspecialchars($row['poster']); ?>" class="img-fluid rounded mb-3 w-100" onerror="this.src='https://via.placeholder.com/800x400'">
+                
+                <p class="text-muted"><?php echo nl2br(htmlspecialchars($row['deskripsi'])); ?></p>
+                
+                <hr class="my-4">
+                
+                <h6 class="fw-bold mb-3"><i class="bi bi-images me-2"></i>Galeri Foto:</h6>
+                <div class="row g-2">
+                    <?php 
+                    $galeri = mysqli_query($koneksi, "SELECT * FROM event_gallery WHERE event_id = '".$row['id']."'");
+                    if(mysqli_num_rows($galeri) > 0):
+                        while($g = mysqli_fetch_assoc($galeri)): ?>
+                            <div class="col-6 col-md-4">
+                                <img src="assets/gallery/<?php echo $g['foto_path']; ?>" class="img-fluid rounded border shadow-sm" style="width:100%; height:150px; object-fit:cover;">
+                            </div>
+                        <?php endwhile; 
+                    else: ?>
+                        <p class="text-muted small">Tidak ada foto dokumentasi tambahan.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endwhile; ?>
 
 <?php include 'footer.php'; ?>
 

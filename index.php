@@ -186,7 +186,7 @@ include 'navbar.php';
                         <i class="bi bi-sunrise-fill" style="font-size: 2rem;"></i>
                     </div>
                     <h5 class="fw-bold text-dark">Ibadah Subuh</h5>
-                    <h3 class="fw-bolder mb-2" style="color: #6f42c1;">06:00 WITA</h3>
+                    <h3 class="fw-bolder mb-2" style="color: #6f42c1;">05:30 WITA</h3>
                     <p class="small text-muted mb-0">Gedung Gereja Utama</p>
                 </div>
             </div>
